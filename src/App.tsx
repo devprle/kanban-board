@@ -10,6 +10,8 @@ import {
   Task,
   tasks as initialTasks
 } from './utils/data-tasks'
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "@/redux/reducers";
 
 const Container = styled.div`
   display: flex;
@@ -50,10 +52,13 @@ const TasksWrapper = styled.div`
 `
 
 const App = () => {
-  const [tasks, setTasks] = useState<Task[]>(initialTasks)
+  //const [tasks, setTasks] = useState<Task[]>(initialTasks)
+
+  const dispatch = useDispatch()
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
   const [status, setStatus] = useState<Status>('todo')
 
+  const tasks = useSelector<RootState, Task[]>((state)=>state.taskReducer.tasks)
   const columns = statuses.map((status) => {
     const tasksInColumn = tasks.filter((task) => task.status === status)
     return {
@@ -64,30 +69,30 @@ const App = () => {
 
   const updateTask = (task: Task) => {
     const updatedTasks = tasks.map((t) => (t.id === task.id ? task : t))
-    setTasks(updatedTasks)
+    dispatch({type: 'UPDATE_TASK', payload: updatedTasks})
   }
 
   const deleteTask = (task: Task) => {
     const updatedTasks = tasks.filter((t) => t.id !== task.id)
-    setTasks(updatedTasks)
-  }
+    dispatch({type: 'DELETE_TASK', payload: updatedTasks})
 
-  const openCreateModal = (status: Status) => {
-    setStatus(status)
-    setIsCreateModalOpen(true)
   }
-
-  const closeCreateModal = () => {
-    setIsCreateModalOpen(false)
-  }
-
   const createNewTask = (title: string) => {
     const newTask: Task = {
       id: tasks.length + 1,
       title,
       status
     }
-    setTasks([...tasks, newTask])
+
+    dispatch({type: 'ADD_TASK', payload: newTask})
+    setIsCreateModalOpen(false)
+  }
+  const openCreateModal = (status: Status) => {
+    setStatus(status)
+    setIsCreateModalOpen(true)
+  }
+
+  const closeCreateModal = () => {
     setIsCreateModalOpen(false)
   }
 
