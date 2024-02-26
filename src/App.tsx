@@ -31,6 +31,7 @@ const App = () => {
   return (
     <Container>
       <SearchInput
+        id="search"
         placeholder="Search tasks"
         onChange={(e) => filterTasks(e)}
         type="text"

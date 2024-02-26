@@ -17,6 +17,9 @@ const TaskColumn = ({ status }: { status: Status }) => {
   const tasks = useSelector<RootState, Task[]>(
     (state) => state.taskReducer.tasks
   )
+  const defaultTasks = useSelector<RootState, Task[]>(
+    (state) => state.taskReducer.defaultTasks
+  )
   const tasksInColumn = tasks.filter((task) => task.status === status)
   const openModal = (status: Status) => {
     dispatch({ type: 'OPEN_MODAL', payload: status })
@@ -29,7 +32,7 @@ const TaskColumn = ({ status }: { status: Status }) => {
 
     if (task) {
       const updatedTask = { ...task, status }
-      const updatedTasks = tasks.map((t) =>
+      const updatedTasks = defaultTasks.map((t) =>
         t.id === task.id ? updatedTask : t
       )
       dispatch({ type: 'UPDATE_TASK', payload: updatedTasks })
