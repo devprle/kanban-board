@@ -1,9 +1,13 @@
-import {combineReducers} from "redux";
-import {tasksReducer} from "@/redux/tasksReducer";
-import {TaskState} from "@/redux/tasksReducer";
+import { combineReducers } from 'redux'
+import { tasksReducer } from '@/redux/tasksReducer'
+import { modalReducer } from '@/redux/modalReducer'
+import { TaskState } from '@/redux/tasksReducer'
+import { ModalState } from '@/redux/modalReducer'
 export interface RootState {
-    taskReducer: TaskState;
+  taskReducer: TaskState
+  modalReducer: ModalState
 }
 export const rootReducer = combineReducers({
-    taskReducer: tasksReducer
+  taskReducer: tasksReducer,
+  modalReducer: modalReducer
 })

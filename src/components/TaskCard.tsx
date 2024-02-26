@@ -2,6 +2,8 @@ import { useState } from 'react'
 import styled from 'styled-components'
 
 import { Task } from '@/utils/data-tasks'
+import { useSelector, useDispatch } from 'react-redux'
+import { RootState } from '@/redux/reducers'
 
 const TaskCardWrapper = styled.div`
   position: relative;
@@ -33,17 +35,25 @@ const DeleteButton = styled.div`
     display: block;
   }
 `
+const CardTextarea = styled.textarea`
+  width: 100%;
+`
 
-const TaskCard = ({
-  task,
-  updateTask,
-  deleteTask
-}: {
-  task: Task
-  updateTask: (task: Task) => void
-  deleteTask: (task: Task) => void
-}) => {
+const TaskCard = ({ task }: { task: Task }) => {
+  const dispatch = useDispatch()
   const [isEditingTitle, setIsEditingTitle] = useState(false)
+
+  const tasks = useSelector<RootState, Task[]>(
+    (state) => state.taskReducer.tasks
+  )
+  const deleteTask = (task: Task) => {
+    const updatedTasks = tasks.filter((t) => t.id !== task.id)
+    dispatch({ type: 'DELETE_TASK', payload: updatedTasks })
+  }
+  const updateTask = (task: Task) => {
+    const updatedTasks = tasks.map((t) => (t.id === task.id ? task : t))
+    dispatch({ type: 'UPDATE_TASK', payload: updatedTasks })
+  }
 
   return (
     <TaskCardWrapper
@@ -56,11 +66,10 @@ const TaskCard = ({
       <DeleteButton onClick={() => deleteTask(task)}>×</DeleteButton>
 
       {isEditingTitle ? (
-        <input
-          autoFocus
-          className="w-full"
-          onBlur={() => setIsEditingTitle(false)}
+        <CardTextarea
           value={task.title}
+          autoFocus
+          onBlur={() => setIsEditingTitle(false)}
           onChange={(e) => updateTask({ ...task, title: e.target.value })}
         />
       ) : (
