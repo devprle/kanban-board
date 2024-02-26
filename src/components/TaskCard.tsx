@@ -1,6 +1,35 @@
 import { useState } from 'react'
+import styled from 'styled-components'
 
 import { Task } from '../utils/data-tasks'
+
+const TaskCardWrapper = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  border: 1px solid #ccc;
+  background-color: #f7fafc;
+  padding: 6px 8px;
+`
+
+const DeleteButton = styled.div`
+  position: absolute;
+  top: -3px;
+  right: 5px;
+  cursor: pointer;
+  display: none;
+  transition: 0.1s;
+  &:hover {
+    scale: 1.1;
+    font-weight: bold;
+  }
+  ${TaskCardWrapper}:hover & {
+    display: block;
+  }
+`
 
 const TaskCard = ({
   task,
@@ -14,34 +43,27 @@ const TaskCard = ({
   const [isEditingTitle, setIsEditingTitle] = useState(false)
 
   return (
-    <div
+    <TaskCardWrapper
       draggable
       onDoubleClick={() => setIsEditingTitle(true)}
       onDragStart={(e) => {
         e.dataTransfer.setData('id', String(task.id))
       }}
-      className="group relative w-24 h-24  border bg-gray-50 py-1 px-2 flex justify-center items-center"
     >
-      <div
-        onClick={() => deleteTask(task)}
-        className="cursor pointer absolute right-1 -top-1 hidden cursor-pointer transition-opacity duration-300 group-hover:block"
-      >
-        ×
-      </div>
+      <DeleteButton onClick={() => deleteTask(task)}>×</DeleteButton>
 
-        {isEditingTitle ? (
-          <input
-            autoFocus
-            className="w-full"
-            onBlur={() => setIsEditingTitle(false)}
-            value={task.title}
-            onChange={(e) => updateTask({ ...task, title: e.target.value })}
-          />
-        ) : (
-          <div className='text-center'>{task.title}</div>
-        )}
-
-    </div>
+      {isEditingTitle ? (
+        <input
+          autoFocus
+          className="w-full"
+          onBlur={() => setIsEditingTitle(false)}
+          value={task.title}
+          onChange={(e) => updateTask({ ...task, title: e.target.value })}
+        />
+      ) : (
+        <div className="text-center">{task.title}</div>
+      )}
+    </TaskCardWrapper>
   )
 }
 
