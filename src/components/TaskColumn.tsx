@@ -1,47 +1,14 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import styled from 'styled-components'
 
 import TaskCard from '@/components/TaskCard'
+import {
+  ColumnHeader,
+  ColumnWrapper,
+  TasksWrapper
+} from '@/components/TaskColumn.styles'
 import { RootState } from '@/redux/reducers'
 import { Status, Task } from '@/utils/data-tasks'
-
-const ColumnWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  align-items: center;
-`
-
-const ColumnHeader = styled.div`
-  position: relative;
-  text-align: center;
-  width: 100%;
-`
-
-const ColumnTitle = styled.h2`
-  text-transform: capitalize;
-`
-
-const TaskCount = styled.div`
-  font-size: 0.75rem;
-`
-
-const AddButton = styled.div`
-  position: absolute;
-  top: 50%;
-  right: 0.75rem;
-  transform: translateY(-50%);
-  cursor: pointer;
-  font-size: 1.25rem;
-  font-weight: bold;
-`
-const TasksWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-`
 
 const TaskColumn = ({ status }: { status: Status }) => {
   const dispatch = useDispatch()
@@ -73,12 +40,12 @@ const TaskColumn = ({ status }: { status: Status }) => {
       onDrop={(e) => handleDrop(e, status)}
       onDragOver={(e) => e.preventDefault()}
     >
-      <ColumnHeader>
-        <ColumnTitle>{status.replace(/-/g, ' ')}</ColumnTitle>
-        <TaskCount>({tasksInColumn.length})</TaskCount>
-        <AddButton onClick={() => openModal(status)}>+</AddButton>
+      <ColumnHeader status={status}>
+        <h2>{status.replace(/-/g, ' ')}</h2>
+        <h3>({tasksInColumn.length})</h3>
+        <button onClick={() => openModal(status)}>+</button>
       </ColumnHeader>
-      <TasksWrapper>
+      <TasksWrapper status={status}>
         {tasksInColumn.map((task) => (
           <TaskCard key={'task-' + task.id} task={task} />
         ))}
