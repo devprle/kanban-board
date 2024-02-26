@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 
-import { Task } from '../utils/data-tasks'
+import { Task } from '@/utils/data-tasks'
 
 const TaskCardWrapper = styled.div`
   position: relative;
@@ -14,7 +14,10 @@ const TaskCardWrapper = styled.div`
   background-color: #f7fafc;
   padding: 6px 8px;
 `
-
+const TaskCardTitle = styled.div`
+  text-align: center;
+  line-height: 1;
+`
 const DeleteButton = styled.div`
   position: absolute;
   top: -3px;
@@ -61,7 +64,7 @@ const TaskCard = ({
           onChange={(e) => updateTask({ ...task, title: e.target.value })}
         />
       ) : (
-        <div className="text-center">{task.title}</div>
+        <TaskCardTitle>{task.title}</TaskCardTitle>
       )}
     </TaskCardWrapper>
   )

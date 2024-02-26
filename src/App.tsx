@@ -3,12 +3,11 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import Modal from './components/Modal'
-import TaskCard from './components/TaskCard'
+import TaskColumn from "@/components/TaskColumn";
 import {
   Status,
   statuses,
   Task,
-  tasks as initialTasks
 } from './utils/data-tasks'
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@/redux/reducers";
@@ -18,38 +17,7 @@ const Container = styled.div`
   justify-content: center;
 `
 
-const ColumnWrapper = styled.div`
-  width: 13rem;
-`
 
-const ColumnHeader = styled.div`
-  position: relative;
-  text-align: center;
-`
-
-const ColumnTitle = styled.h2`
-  text-transform: capitalize;
-`
-
-const TaskCount = styled.div`
-  font-size: 0.75rem;
-`
-
-const AddButton = styled.div`
-  position: absolute;
-  top: 50%;
-  right: 0.75rem;
-  transform: translateY(-50%);
-  cursor: pointer;
-  font-size: 1.25rem;
-  font-weight: bold;
-`
-const TasksWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-`
 
 const App = () => {
   //const [tasks, setTasks] = useState<Task[]>(initialTasks)
@@ -109,30 +77,14 @@ const App = () => {
     <Container>
       <div className="flex divide-x">
         {columns.map((column) => (
-          <ColumnWrapper
-            id={column.status}
-            key={column.status}
-            onDrop={(e) => handleDrop(e, column.status)}
-            onDragOver={(e) => e.preventDefault()}
-          >
-            <ColumnHeader>
-              <ColumnTitle>{column.status.replace(/-/g, ' ')}</ColumnTitle>
-              <TaskCount>({column.tasks.length})</TaskCount>
-              <AddButton onClick={() => openCreateModal(column.status)}>
-                +
-              </AddButton>
-            </ColumnHeader>
-            <TasksWrapper>
-              {column.tasks.map((task) => (
-                <TaskCard
-                  key={'task-' + task.id}
-                  task={task}
-                  updateTask={updateTask}
-                  deleteTask={deleteTask}
-                />
-              ))}
-            </TasksWrapper>
-          </ColumnWrapper>
+            <TaskColumn
+                key={column.status}
+                column={column}
+                openCreateModal={openCreateModal}
+                handleDrop={handleDrop}
+                updateTask={updateTask}
+                deleteTask={deleteTask}
+            />
         ))}
       </div>
       {isCreateModalOpen && (
