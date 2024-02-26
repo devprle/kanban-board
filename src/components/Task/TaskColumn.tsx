@@ -1,14 +1,15 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import TaskCard from '@/components/TaskCard'
+import { RootState } from '@/redux/reducers'
+import { Status, Task } from '@/utils/data-tasks'
+
 import {
   ColumnHeader,
   ColumnWrapper,
   TasksWrapper
-} from '@/components/TaskColumn.styles'
-import { RootState } from '@/redux/reducers'
-import { Status, Task } from '@/utils/data-tasks'
+} from '../styledComponents/TaskColumn.styles'
+import TaskCard from './TaskCard'
 
 const TaskColumn = ({ status }: { status: Status }) => {
   const dispatch = useDispatch()

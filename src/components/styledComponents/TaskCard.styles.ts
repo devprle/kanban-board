@@ -20,6 +20,7 @@ export const TaskCardContainer = styled.div<Props>`
       : props.status === 'in-progress'
       ? '#E86B79'
       : '#4B5F74'};
+
   h3 {
     text-align: center;
     line-height: 1;
@@ -27,6 +28,7 @@ export const TaskCardContainer = styled.div<Props>`
 
   textarea {
     width: 100%;
+    color: black;
   }
 `
 

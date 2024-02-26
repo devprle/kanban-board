@@ -1,9 +1,13 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { DeleteButton, TaskCardContainer } from '@/components/TaskCard.styles'
 import { RootState } from '@/redux/reducers'
 import { Task } from '@/utils/data-tasks'
+
+import {
+  DeleteButton,
+  TaskCardContainer
+} from '../styledComponents/TaskCard.styles'
 
 const TaskCard = ({ task }: { task: Task }) => {
   const dispatch = useDispatch()

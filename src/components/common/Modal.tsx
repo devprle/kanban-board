@@ -15,7 +15,7 @@ import {
   ModalTitle,
   ModalWrapper,
   Overlay
-} from './Modal.styles'
+} from '../styledComponents/Modal.styles'
 
 const Modal = () => {
   const [title, setTitle] = useState('')

@@ -1,13 +1,14 @@
-import './App.scss'
-
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from 'redux/reducers'
 
-import TaskColumn from '@/components/TaskColumn'
-import { RootState } from '@/redux/reducers'
-
-import { ColumnsWrapper, Container, SearchInput } from './components/App.styles'
-import Modal from './components/Modal'
+import Modal from './components/common/Modal'
+import {
+  ColumnsWrapper,
+  Container,
+  SearchInput
+} from './components/styledComponents/App.styles'
+import TaskColumn from './components/Task/TaskColumn'
 import { statuses, Task } from './utils/data-tasks'
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
   const tasks = useSelector<RootState, Task[]>(
     (state) => state.taskReducer.defaultTasks
   )
+
   const isModalOpen = useSelector<RootState, boolean>(
     (state) => state.modalReducer.isModalOpen
   )
