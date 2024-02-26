@@ -8,6 +8,7 @@ import App from './App'
 const container = document.getElementById('root') as HTMLDivElement
 const root = createRoot(container)
 import { Provider } from 'react-redux'
+
 import { store } from './redux/store'
 root.render(
   <StrictMode>

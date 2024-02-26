@@ -1,9 +1,9 @@
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 
-import { Task } from '@/utils/data-tasks'
-import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '@/redux/reducers'
+import { Task } from '@/utils/data-tasks'
 
 const TaskCardWrapper = styled.div`
   position: relative;

@@ -1,4 +1,4 @@
-import {Status} from "@/utils/data-tasks";
+import { Status } from '@/utils/data-tasks'
 
 export interface ModalState {
   isModalOpen: boolean
@@ -6,16 +6,16 @@ export interface ModalState {
 }
 
 type OpenModal = { type: 'OPEN_MODAL'; payload: Status }
-type CloseModal = { type: 'CLOSE_MODAL'; payload: Status}
+type CloseModal = { type: 'CLOSE_MODAL'; payload: Status }
 
 type Action = OpenModal | CloseModal
 
 const initialState = {
-    isModalOpen: false,
-    status: undefined
+  isModalOpen: false,
+  status: undefined
 }
 export const modalReducer = (
-    state:ModalState = initialState,
+  state: ModalState = initialState,
   action: Action
 ) => {
   switch (action.type) {

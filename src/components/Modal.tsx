@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import {Status, Task} from "@/utils/data-tasks";
-import {useSelector, useDispatch} from "react-redux";
-import {RootState} from "@/redux/reducers";
+
+import { RootState } from '@/redux/reducers'
+import { Status, Task } from '@/utils/data-tasks'
 
 const Overlay = styled.div`
   position: fixed;
@@ -71,8 +72,8 @@ const ModalButton = styled.button`
   cursor: pointer;
 `
 const ColumnName = styled.span`
- text-transform: capitalize;
- color: red;
+  text-transform: capitalize;
+  color: red;
 `
 
 const Modal = () => {
@@ -80,12 +81,11 @@ const Modal = () => {
   const dispatch = useDispatch()
 
   const tasks = useSelector<RootState, Task[]>(
-      (state) => state.taskReducer.tasks
+    (state) => state.taskReducer.tasks
   )
   const status = useSelector<RootState, Status>(
-      (state) => state.modalReducer.status || 'todo'
+    (state) => state.modalReducer.status || 'todo'
   )
-
 
   const createNewTask = (title: string) => {
     const newTask: Task = {
@@ -93,17 +93,13 @@ const Modal = () => {
       title,
       status
     }
-    dispatch({type: 'ADD_TASK', payload: newTask})
-    dispatch({type: 'CLOSE_MODAL', payload:status})
+    dispatch({ type: 'ADD_TASK', payload: newTask })
+    dispatch({ type: 'CLOSE_MODAL', payload: status })
   }
-
 
   const closeModal = () => {
-      dispatch({type: 'CLOSE_MODAL'})
+    dispatch({ type: 'CLOSE_MODAL' })
   }
-
-
-
 
   return (
     <>
@@ -111,7 +107,10 @@ const Modal = () => {
       <ModalWrapper>
         <ModalContent>
           <ModalHeader>
-            <ModalTitle>Create Task in "<ColumnName>{status.replace(/-/g, ' ')}</ColumnName>" Column</ModalTitle>
+            <ModalTitle>
+              Create Task in "
+              <ColumnName>{status.replace(/-/g, ' ')}</ColumnName>" Column
+            </ModalTitle>
             <CloseButton onClick={closeModal}>×</CloseButton>
           </ModalHeader>
           <ModalInput
